@@ -1,0 +1,39 @@
+---
+title: "Data exploration for Heart diseases and common habits"
+author: 
+  - name: "Jose Daniel Trujillo Sandoval"
+    orcid: "0009-0008-2978-2604"
+    email: "jotr4809@colorado.edu"
+    affiliation:
+      - name: "University of Colorado Boulder"
+        department: "Department of Civil, Environmental and Architectural Engineering"
+        city: "Boulder"
+        state: "CO"
+        country: "USA"
+
+date: today
+format: html
+editor: visual
+---
+
+# Introduction
+
+This project would focus on assessing habits related to heart diseases. The data set contains information of random patients, Systolic and Diastolic heart rates, Body mass index, height and weight, and common habits like drinking and smoking
+
+# Methods
+
+## Reading the Data
+
+## Data Exploration Approach
+
+## Initial Data Tidying
+
+# Results
+
+\[This will be the core of your analysis with specific requirements\]
+
+# Conclusions
+
+## Summary of Findings
+
+## Questions and Next Steps
