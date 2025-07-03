@@ -61,10 +61,6 @@ Cardiac_raw_data |>
   group_by(height, weight) |>
   summarise(mean_age = mean(age))
 
-# Grouping by cholesterol and Physical activity to see the bmi 
-Cardiac_raw_data |>
-  group_by(cholesterol, physical_activity) |>
-  summarise(count_bmi = count(bmi))
 ```
 
 ## Initial Data Tidying
