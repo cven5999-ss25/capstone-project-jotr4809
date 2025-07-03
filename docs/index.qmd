@@ -10,7 +10,6 @@ author:
         city: "Boulder"
         state: "CO"
         country: "USA"
-
 date: today
 format: html
 editor: visual
@@ -23,6 +22,16 @@ This project would focus on assessing habits related to heart diseases. The data
 # Methods
 
 ## Reading the Data
+
+Loading Packages
+
+```{r}
+# Load Packages
+library(tidyverse)
+library(here) 
+# Read Data 
+Cardiac_raw_data <- read.csv(here::here("data/raw/cardio_raw_data.csv"))
+```
 
 ## Data Exploration Approach
 
