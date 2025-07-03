@@ -35,6 +35,38 @@ Cardiac_raw_data <- read.csv(here::here("data/raw/cardio_raw_data.csv"))
 
 ## Data Exploration Approach
 
+```{r}
+
+# Viewing the first rows 
+head(Cardiac_raw_data) #Looks like everything is good at the first 7 rows
+glimpse(Cardiac_raw_data) # Age: int, gender: chr, height: int, weight: dbl, Sys: int, dias: int, Cholesterol: chr, Glucose: chr, smoke: chr, alcohol: chr, physical: chr, disease: chr, bmi: dbl
+
+# Checking dimensions 
+dim(Cardiac_raw_data) #68,675 rows, 13 colums 
+
+# looking at ages 
+Cardiac_raw_data |> 
+  count(age) 
+
+# looking at height
+Cardiac_raw_data |> 
+  count(height) 
+
+# looking at weight
+Cardiac_raw_data |> 
+  count(weight) 
+
+# Grouping by height and weithg to look at the mean ages
+Cardiac_raw_data |> 
+  group_by(height, weight) |>
+  summarise(mean_age = mean(age))
+
+# Grouping by cholesterol and Physical activity to see the bmi 
+Cardiac_raw_data |>
+  group_by(cholesterol, physical_activity) |>
+  summarise(count_bmi = count(bmi))
+```
+
 ## Initial Data Tidying
 
 # Results
