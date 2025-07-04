@@ -40,6 +40,7 @@ Cardiac_raw_data <- read.csv(here::here("data/raw/cardio_raw_data.csv"))
 # Viewing the first rows 
 head(Cardiac_raw_data) #Looks like everything is good at the first 7 rows
 glimpse(Cardiac_raw_data) # Age: int, gender: chr, height: int, weight: dbl, Sys: int, dias: int, Cholesterol: chr, Glucose: chr, smoke: chr, alcohol: chr, physical: chr, disease: chr, bmi: dbl
+tail(Cardiac_raw_data)
 
 # Checking dimensions 
 dim(Cardiac_raw_data) #68,675 rows, 13 colums 
@@ -97,6 +98,40 @@ Cardiac_raw_data |>
 ```
 
 ## Initial Data Tidying
+
+```{r}
+#Creating vectors that would be converted into factors later 
+Vector_yes_no <- c("Yes", "No") #This vector would be use into the Yes No answers for Smoking, alcohol, physical activity and cardiovascular disease 
+
+Vector_levels_glucose_and_cholesterol <-  c("Extremely High", "High", "Normal") #This vector would be use for the answers in Cholesterol and glucose levels
+
+Vector_gender <- c("Female", "Male") #this vector would be use into the gender answers 
+
+Tidied_cardiac_data <- Cardiac_raw_data |> 
+  #Mutating from chr to factor
+  mutate(gender_fct = factor(gender, levels = Vector_gender),
+         cholesterol_fct = factor(cholesterol, levels = Vector_levels_glucose_and_cholesterol),
+         glucose_fct = factor(glucose, levels= Vector_levels_glucose_and_cholesterol),
+         smoke_fct = factor(smoke, levels = Factor_Y_N),
+         alcohol_fct = factor(alcohol_intake, levels = Factor_Y_N),
+         physical_activity_fct = factor(physical_activity, levels = Factor_Y_N),
+         cv_disease_fct = factor(cv_disease, levels = Factor_Y_N)) |> 
+  #Selecting the new column factors and numeric variables
+  select(age, gender_fct, height, weight, systolic, diastolic, cholesterol_fct, glucose_fct, smoke_fct, alcohol_fct, physical_activity_fct, cv_disease_fct, bmi) |> 
+  #Renaming the colums 
+  rename(gender = gender_fct,
+         cholesterol = cholesterol_fct,
+         glucose = glucose_fct,
+         smoke = smoke_fct,
+         alcohol_intake = alcohol_fct,
+         physical_act= physical_activity_fct,
+         Cardiocascular_disease = cv_disease_fct) |> 
+  #Relocating bmi after diastolic 
+  relocate(bmi, .after = diastolic)
+
+#Saving results 
+write_csv(Tidied_cardiac_data, here::here("data/processed/tidied_Cardiac_data.csv"))
+```
 
 # Results
 
