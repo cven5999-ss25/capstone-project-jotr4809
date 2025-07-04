@@ -42,7 +42,7 @@ head(Cardiac_raw_data) #Looks like everything is good at the first 7 rows
 glimpse(Cardiac_raw_data) # Age: int, gender: chr, height: int, weight: dbl, Sys: int, dias: int, Cholesterol: chr, Glucose: chr, smoke: chr, alcohol: chr, physical: chr, disease: chr, bmi: dbl
 
 # Checking dimensions 
-dim(Cardiac_raw_data) #68,675 rows, 13 colums 
+dim(Cardiac_raw_dat) #68,675 rows, 13 colums 
 
 # looking at ages 
 Cardiac_raw_data |> 
@@ -56,11 +56,44 @@ Cardiac_raw_data |>
 Cardiac_raw_data |> 
   count(weight) 
 
-# Grouping by height and weithg to look at the mean ages
+# Sumarise to see if there is any NA
 Cardiac_raw_data |> 
-  group_by(height, weight) |>
-  summarise(mean_age = mean(age))
+  summarise(mean_age = mean(age),
+            mean_height = mean(height),
+            mean_weight = mean(weight),
+            mean_systolic = mean(systolic),
+            mean_diastolic = mean(diastolic),
+            mean_bmi = mean(bmi)) #No NAs found 
 
+#How many times each chr variable appers, and if there is any miswriting 
+Cardiac_raw_data |>
+  group_by(gender) |> # female 44,737 male 23,938  = 68,675 
+  summarise(count = n())
+
+Cardiac_raw_data |>
+  group_by(cholesterol) |> #Extermely High 7,864 High 9,296 Normal 51,515 = 68,675 
+  summarise(count = n())
+  
+
+Cardiac_raw_data |>
+  group_by(glucose) |> # Extremely High 5,218 High 5,059 Normal 58,398 = 68,675
+  summarise(count = n())
+
+Cardiac_raw_data |>
+  group_by(smoke) |> #NO 62,635 Yes 6,040 = 68,675
+  summarise(count = n())
+
+Cardiac_raw_data |>
+  group_by(alcohol_intake) |> # No 65,007 Yes 3,668  = 68,675
+  summarise(count = n())
+
+Cardiac_raw_data |>
+  group_by(physical_activity) |> #No 13,509 Yes 55,166 = 68,675
+  summarise(count = n())
+
+Cardiac_raw_data |>
+  group_by(cv_disease) |> # No 34,724 Yes 33,951 = 68,675
+  summarise(count = n())
 ```
 
 ## Initial Data Tidying
