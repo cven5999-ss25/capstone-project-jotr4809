@@ -42,7 +42,7 @@ head(Cardiac_raw_data) #Looks like everything is good at the first 7 rows
 glimpse(Cardiac_raw_data) # Age: int, gender: chr, height: int, weight: dbl, Sys: int, dias: int, Cholesterol: chr, Glucose: chr, smoke: chr, alcohol: chr, physical: chr, disease: chr, bmi: dbl
 
 # Checking dimensions 
-dim(Cardiac_raw_dat) #68,675 rows, 13 colums 
+dim(Cardiac_raw_data) #68,675 rows, 13 colums 
 
 # looking at ages 
 Cardiac_raw_data |> 
