@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jose Daniel Trujillo Sandoval">
-<meta name="dcterms.date" content="2025-07-03">
+<meta name="dcterms.date" content="2025-07-09">
 
 <title>Data exploration for Heart diseases and common habits</title>
 <style>
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -40,10 +75,30 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#reading-the-data" id="toc-reading-the-data" class="nav-link" data-scroll-target="#reading-the-data">Reading the Data</a></li>
+  <li><a href="#data-exploration-approach" id="toc-data-exploration-approach" class="nav-link" data-scroll-target="#data-exploration-approach">Data Exploration Approach</a></li>
+  <li><a href="#initial-data-tidying" id="toc-initial-data-tidying" class="nav-link" data-scroll-target="#initial-data-tidying">Initial Data Tidying</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a>
+  <ul class="collapse">
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">Summary of Findings</a></li>
+  <li><a href="#questions-and-next-steps" id="toc-questions-and-next-steps" class="nav-link" data-scroll-target="#questions-and-next-steps">Questions and Next Steps</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -72,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 3, 2025</p>
+      <p class="date">July 9, 2025</p>
     </div>
   </div>
   
@@ -84,6 +139,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<hr>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>This project would focus on assessing habits related to heart diseases. The data set contains information of random patients, Systolic and Diastolic heart rates, Body mass index, height and weight, and common habits like drinking and smoking</p>
@@ -92,12 +148,644 @@ ul.task-list li input[type="checkbox"] {
 <h1>Methods</h1>
 <section id="reading-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="reading-the-data">Reading the Data</h2>
+<p>Loading Packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Data </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/raw/cardio_raw_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="data-exploration-approach" class="level2">
 <h2 class="anchored" data-anchor-id="data-exploration-approach">Data Exploration Approach</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Viewing the first rows </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Cardiac_raw_data) <span class="co">#Looks like everything is good at the first 7 rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age gender height weight systolic diastolic    cholesterol glucose smoke
+1  51   Male    168     62      110        80         Normal  Normal    No
+2  56 Female    156     85      140        90 Extremely High  Normal    No
+3  52 Female    165     64      130        70 Extremely High  Normal    No
+4  49   Male    169     82      150       100         Normal  Normal    No
+5  48 Female    156     56      100        60         Normal  Normal    No
+6  61 Female    151     67      120        80           High    High    No
+  alcohol_intake physical_activity cv_disease  bmi
+1             No               Yes         No 22.0
+2             No               Yes        Yes 34.9
+3             No                No        Yes 23.5
+4             No               Yes        Yes 28.7
+5             No                No         No 23.0
+6             No                No         No 29.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(Cardiac_raw_data) <span class="co"># Age: int, gender: chr, height: int, weight: dbl, Sys: int, dias: int, Cholesterol: chr, Glucose: chr, smoke: chr, alcohol: chr, physical: chr, disease: chr, bmi: dbl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 68,675
+Columns: 13
+$ age               &lt;int&gt; 51, 56, 52, 49, 48, 61, 61, 62, 49, 55, 62, 52, 41, …
+$ gender            &lt;chr&gt; "Male", "Female", "Female", "Male", "Female", "Femal…
+$ height            &lt;int&gt; 168, 156, 165, 169, 156, 151, 157, 178, 158, 164, 16…
+$ weight            &lt;dbl&gt; 62, 85, 64, 82, 56, 67, 93, 95, 71, 68, 80, 60, 60, …
+$ systolic          &lt;int&gt; 110, 140, 130, 150, 100, 120, 130, 130, 110, 110, 12…
+$ diastolic         &lt;int&gt; 80, 90, 70, 100, 60, 80, 80, 90, 70, 60, 80, 80, 80,…
+$ cholesterol       &lt;chr&gt; "Normal", "Extremely High", "Extremely High", "Norma…
+$ glucose           &lt;chr&gt; "Normal", "Normal", "Normal", "Normal", "Normal", "H…
+$ smoke             &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "No", "No"…
+$ alcohol_intake    &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "No", "No"…
+$ physical_activity &lt;chr&gt; "Yes", "Yes", "No", "Yes", "No", "No", "Yes", "Yes",…
+$ cv_disease        &lt;chr&gt; "No", "Yes", "Yes", "Yes", "No", "No", "No", "Yes", …
+$ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 28.4…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(Cardiac_raw_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      age gender height weight systolic diastolic    cholesterol glucose smoke
+68670  58 Female    165     80      150        80         Normal  Normal    No
+68671  53   Male    168     76      120        80         Normal  Normal   Yes
+68672  62 Female    158    126      140        90           High    High    No
+68673  53   Male    183    105      180        90 Extremely High  Normal    No
+68674  62 Female    163     72      135        80         Normal    High    No
+68675  57 Female    170     72      120        80           High  Normal    No
+      alcohol_intake physical_activity cv_disease  bmi
+68670             No               Yes        Yes 29.4
+68671             No               Yes         No 26.9
+68672             No               Yes        Yes 50.5
+68673            Yes                No        Yes 31.4
+68674             No                No        Yes 27.1
+68675             No               Yes         No 24.9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking dimensions </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Cardiac_raw_data) <span class="co">#68,675 rows, 13 colums </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 68675    13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># looking at ages </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(age) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   age    n
+1   30    3
+2   31    1
+3   40 1768
+4   41 1596
+5   42 1875
+6   43 1391
+7   44 2002
+8   45 1476
+9   46 2062
+10  47 1591
+11  48 2165
+12  49 1779
+13  50 3376
+14  51 3145
+15  52 3306
+16  53 3193
+17  54 3814
+18  55 3526
+19  56 3866
+20  57 3514
+21  58 3623
+22  59 3313
+23  60 3542
+24  61 3126
+25  62 2672
+26  63 2140
+27  64 2686
+28  65 2124</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># looking at height</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(height) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    height    n
+1       55    1
+2       57    1
+3       59    1
+4       60    1
+5       64    1
+6       65    2
+7       67    3
+8       68    2
+9       70    2
+10      71    1
+11      72    1
+12      74    1
+13      75    2
+14      76    1
+15      80    1
+16      81    1
+17      91    1
+18      96    1
+19      97    1
+20      99    1
+21     100    3
+22     104    2
+23     105    2
+24     108    1
+25     109    2
+26     110    7
+27     111    1
+28     112    1
+29     113    1
+30     117    2
+31     119    1
+32     120   33
+33     122    1
+34     125    4
+35     128    1
+36     130   12
+37     131    1
+38     132    3
+39     133    6
+40     134    2
+41     135    5
+42     136    5
+43     137   11
+44     138    9
+45     139    6
+46     140   48
+47     141   21
+48     142   29
+49     143   45
+50     144   69
+51     145  150
+52     146  146
+53     147  221
+54     148  291
+55     149  337
+56     150 1027
+57     151  599
+58     152 1127
+59     153 1037
+60     154 1413
+61     155 1738
+62     156 2705
+63     157 1781
+64     158 3252
+65     159 1963
+66     160 4934
+67     161 1669
+68     162 3198
+69     163 2484
+70     164 3335
+71     165 5755
+72     166 1940
+73     167 2496
+74     168 4323
+75     169 2748
+76     170 4599
+77     171 1283
+78     172 1976
+79     173 1054
+80     174 1535
+81     175 1774
+82     176 1108
+83     177  447
+84     178 1203
+85     179  410
+86     180  856
+87     181  188
+88     182  321
+89     183  155
+90     184  149
+91     185  225
+92     186  103
+93     187   76
+94     188   45
+95     189   36
+96     190   40
+97     191   11
+98     192   12
+99     193    6
+100    194    2
+101    195    6
+102    196    6
+103    197    4
+104    198   14
+105    207    1
+106    250    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># looking at weight</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(weight) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    weight    n
+1    11.00    1
+2    21.00    1
+3    22.00    1
+4    23.00    1
+5    28.00    1
+6    29.00    1
+7    30.00    3
+8    31.00    1
+9    32.00    3
+10   33.00    1
+11   34.00    4
+12   35.00    2
+13   35.45    1
+14   36.00    5
+15   37.00    7
+16   38.00    7
+17   39.00    9
+18   40.00   42
+19   41.00   35
+20   42.00   49
+21   42.20    1
+22   43.00   55
+23   44.00   66
+24   45.00  120
+25   45.80    1
+26   46.00   94
+27   47.00  112
+28   48.00  180
+29   49.00  173
+30   50.00  494
+31   50.70    1
+32   51.00  274
+33   51.50    1
+34   52.00  532
+35   52.30    1
+36   53.00  421
+37   53.20    1
+38   53.30    1
+39   53.50    1
+40   53.60    1
+41   53.67    1
+42   53.90    1
+43   54.00  582
+44   54.35    1
+45   54.50    2
+46   55.00  747
+47   55.20    1
+48   55.40    1
+49   55.60    1
+50   56.00  960
+51   56.20    2
+52   57.00  704
+53   57.40    1
+54   57.60    1
+55   57.80    2
+56   58.00 1321
+57   58.50    1
+58   58.70    1
+59   58.80    1
+60   59.00 1008
+61   59.20    1
+62   59.50    2
+63   59.80    1
+64   60.00 2680
+65   60.10    1
+66   60.20    1
+67   60.50    1
+68   60.60    1
+69   61.00  965
+70   61.20    1
+71   61.30    1
+72   61.50    3
+73   62.00 1823
+74   62.20    1
+75   62.30    2
+76   62.40    2
+77   62.50    2
+78   62.70    1
+79   63.00 1597
+80   63.40    1
+81   63.80    1
+82   63.82    1
+83   64.00 1568
+84   64.10    1
+85   64.30    1
+86   64.50    5
+87   64.70    1
+88   64.80    1
+89   65.00 3796
+90   65.30    1
+91   65.50    2
+92   66.00 1362
+93   66.30    1
+94   66.40    1
+95   66.50    3
+96   67.00 1597
+97   67.30    1
+98   67.50    3
+99   67.80    1
+100  67.90    2
+101  68.00 2786
+102  68.20    2
+103  68.30    1
+104  68.40    2
+105  68.50    6
+106  68.90    1
+107  69.00 2161
+108  69.50    6
+109  69.80    2
+110  70.00 3705
+111  70.20    2
+112  70.30    1
+113  70.50    2
+114  70.70    1
+115  70.80    1
+116  71.00 1421
+117  71.20    1
+118  71.30    2
+119  71.50    3
+120  72.00 2262
+121  72.10    2
+122  72.50    4
+123  72.80    1
+124  73.00 1418
+125  73.20    3
+126  73.50    1
+127  73.80    1
+128  74.00 1832
+129  74.20    2
+130  74.30    1
+131  74.50    1
+132  74.77    1
+133  75.00 2693
+134  75.20    1
+135  75.50    2
+136  75.60    1
+137  76.00 1496
+138  76.50    2
+139  76.70    2
+140  76.80    1
+141  77.00  956
+142  78.00 2044
+143  78.20    2
+144  78.50    1
+145  79.00 1269
+146  79.50    2
+147  79.94    1
+148  80.00 2577
+149  80.50    3
+150  80.70    1
+151  80.80    1
+152  81.00  871
+153  81.10    1
+154  82.00 1291
+155  82.10    1
+156  82.30    3
+157  82.40    1
+158  82.50    3
+159  82.90    1
+160  83.00  967
+161  83.50    2
+162  83.60    1
+163  84.00 1074
+164  84.30    1
+165  84.50    1
+166  84.60    1
+167  84.70    1
+168  84.80    1
+169  84.90    1
+170  85.00 1631
+171  85.50    2
+172  86.00  932
+173  86.50    2
+174  87.00  773
+175  88.00  725
+176  88.50    2
+177  89.00  850
+178  89.10    1
+179  89.50    1
+180  89.90    1
+181  90.00 1302
+182  90.50    2
+183  90.70    1
+184  91.00  431
+185  92.00  703
+186  92.20    1
+187  93.00  531
+188  94.00  477
+189  94.50    1
+190  94.70    1
+191  95.00  710
+192  96.00  419
+193  96.50    1
+194  97.00  382
+195  98.00  467
+196  99.00  236
+197  99.90    1
+198 100.00  574
+199 101.00  167
+200 102.00  253
+201 103.00  227
+202 104.00  177
+203 105.00  350
+204 105.50    1
+205 106.00  144
+206 106.40    1
+207 106.50    1
+208 107.00  110
+209 108.00  150
+210 109.00  111
+211 109.50    1
+212 109.70    1
+213 110.00  241
+214 111.00   61
+215 112.00  113
+216 113.00   74
+217 114.00   61
+218 114.60    1
+219 115.00  119
+220 116.00   48
+221 117.00   53
+222 118.00   51
+223 119.00   31
+224 120.00  111
+225 121.00   22
+226 121.30    1
+227 121.80    1
+228 122.00   21
+229 123.00   34
+230 124.00   23
+231 125.00   38
+232 126.00   24
+233 127.00   23
+234 128.00   21
+235 129.00   15
+236 130.00   50
+237 131.00   13
+238 132.00    9
+239 133.00   10
+240 134.00   11
+241 135.00   21
+242 136.00    9
+243 137.00    2
+244 138.00    5
+245 139.00    5
+246 140.00   16
+247 141.00    4
+248 142.00    4
+249 143.00    2
+250 144.00    3
+251 145.00    5
+252 146.00    1
+253 147.00    1
+254 148.00    2
+255 149.00    2
+256 150.00   12
+257 152.00    2
+258 153.00    1
+259 154.00    2
+260 155.00    3
+261 156.00    3
+262 158.00    2
+263 159.00    2
+264 160.00    2
+265 161.00    2
+266 162.00    2
+267 163.00    1
+268 164.00    3
+269 165.00    6
+270 166.00    2
+271 167.00    2
+272 168.00    3
+273 169.00    1
+274 170.00    3
+275 171.00    1
+276 172.00    1
+277 177.00    1
+278 178.00    3
+279 180.00    4
+280 183.00    1
+281 200.00    2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sumarise to see if there is any NA</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_height =</span> <span class="fu">mean</span>(height),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_weight =</span> <span class="fu">mean</span>(weight),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_systolic =</span> <span class="fu">mean</span>(systolic),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_diastolic =</span> <span class="fu">mean</span>(diastolic),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bmi =</span> <span class="fu">mean</span>(bmi)) <span class="co">#No NAs found </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean_age mean_height mean_weight mean_systolic mean_diastolic mean_bmi
+1 53.82365    164.3608    74.10954      126.5956       81.29316 27.51717</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#How many times each chr variable appers, and if there is any miswriting </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">|&gt;</span> <span class="co"># female 44,737 male 23,938  = 68,675 </span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  gender count
+  &lt;chr&gt;  &lt;int&gt;
+1 Female 44737
+2 Male   23938</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cholesterol) <span class="sc">|&gt;</span> <span class="co">#Extermely High 7,864 High 9,296 Normal 51,515 = 68,675 </span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  cholesterol    count
+  &lt;chr&gt;          &lt;int&gt;
+1 Extremely High  7864
+2 High            9296
+3 Normal         51515</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(glucose) <span class="sc">|&gt;</span> <span class="co"># Extremely High 5,218 High 5,059 Normal 58,398 = 68,675</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  glucose        count
+  &lt;chr&gt;          &lt;int&gt;
+1 Extremely High  5218
+2 High            5059
+3 Normal         58398</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(smoke) <span class="sc">|&gt;</span> <span class="co">#NO 62,635 Yes 6,040 = 68,675</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  smoke count
+  &lt;chr&gt; &lt;int&gt;
+1 No    62635
+2 Yes    6040</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(alcohol_intake) <span class="sc">|&gt;</span> <span class="co"># No 65,007 Yes 3,668  = 68,675</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  alcohol_intake count
+  &lt;chr&gt;          &lt;int&gt;
+1 No             65007
+2 Yes             3668</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(physical_activity) <span class="sc">|&gt;</span> <span class="co">#No 13,509 Yes 55,166 = 68,675</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  physical_activity count
+  &lt;chr&gt;             &lt;int&gt;
+1 No                13509
+2 Yes               55166</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cv_disease) <span class="sc">|&gt;</span> <span class="co"># No 34,724 Yes 33,951 = 68,675</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  cv_disease count
+  &lt;chr&gt;      &lt;int&gt;
+1 No         34724
+2 Yes        33951</code></pre>
+</div>
+</div>
 </section>
 <section id="initial-data-tidying" class="level2">
 <h2 class="anchored" data-anchor-id="initial-data-tidying">Initial Data Tidying</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating vectors that would be converted into factors later </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Vector_yes_no <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Yes"</span>, <span class="st">"No"</span>) <span class="co">#This vector would be use into the Yes No answers for Smoking, alcohol, physical activity and cardiovascular disease </span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>Vector_levels_glu_and_cho <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">"Extremely High"</span>, <span class="st">"High"</span>, <span class="st">"Normal"</span>) <span class="co">#This vector would be use for the answers in Cholesterol and glucose levels</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>Vector_gender <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>) <span class="co">#this vector would be use into the gender answers </span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the new tidied data set </span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>Tidied_cardiac_data <span class="ot">&lt;-</span> Cardiac_raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Mutating from chr to factor</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender_fct =</span> <span class="fu">factor</span>(gender, <span class="at">levels =</span> Vector_gender),</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">cholesterol_fct =</span> <span class="fu">factor</span>(cholesterol, <span class="at">levels =</span> Vector_levels_glu_and_cho),</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">glucose_fct =</span> <span class="fu">factor</span>(glucose, <span class="at">levels=</span> Vector_levels_glu_and_cho),</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">smoke_fct =</span> <span class="fu">factor</span>(smoke, <span class="at">levels =</span> Vector_yes_no),</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">alcohol_fct =</span> <span class="fu">factor</span>(alcohol_intake, <span class="at">levels =</span> Vector_yes_no),</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">physical_activity_fct =</span> <span class="fu">factor</span>(physical_activity, <span class="at">levels =</span> Vector_yes_no),</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">cv_disease_fct =</span> <span class="fu">factor</span>(cv_disease, <span class="at">levels =</span> Vector_yes_no)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Selecting the new column factors and numeric variables</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, </span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>         gender_fct, </span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>         height, </span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>         weight, </span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>         systolic, </span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>         diastolic, </span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>         cholesterol_fct, </span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>         glucose_fct, </span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>         smoke_fct, </span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>         alcohol_fct, </span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>         physical_activity_fct, </span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>         cv_disease_fct, </span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>         bmi) <span class="sc">|&gt;</span> </span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Renaming the colums </span></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">gender =</span> gender_fct,</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">cholesterol =</span> cholesterol_fct,</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">glucose =</span> glucose_fct,</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">smoke =</span> smoke_fct,</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">alcohol_intake =</span> alcohol_fct,</span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">physical_act=</span> physical_activity_fct,</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">Cardiocascular_disease =</span> cv_disease_fct) <span class="sc">|&gt;</span> </span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Relocating bmi after diastolic </span></span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(bmi, <span class="at">.after =</span> diastolic)</span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Saving results </span></span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(Tidied_cardiac_data, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/tidied_Cardiac_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="results" class="level1">

@@ -11,9 +11,16 @@ author:
         state: "CO"
         country: "USA"
 date: today
-format: html
+format: 
+  html:
+    toc: true
+    toc-depth: 2
 editor: visual
+execute:
+  warning: false
 ---
+
+------------------------------------------------------------------------
 
 # Introduction
 
@@ -103,21 +110,34 @@ Cardiac_raw_data |>
 #Creating vectors that would be converted into factors later 
 Vector_yes_no <- c("Yes", "No") #This vector would be use into the Yes No answers for Smoking, alcohol, physical activity and cardiovascular disease 
 
-Vector_levels_glucose_and_cholesterol <-  c("Extremely High", "High", "Normal") #This vector would be use for the answers in Cholesterol and glucose levels
+Vector_levels_glu_and_cho <-  c("Extremely High", "High", "Normal") #This vector would be use for the answers in Cholesterol and glucose levels
 
 Vector_gender <- c("Female", "Male") #this vector would be use into the gender answers 
 
+# Creating the new tidied data set 
 Tidied_cardiac_data <- Cardiac_raw_data |> 
   #Mutating from chr to factor
   mutate(gender_fct = factor(gender, levels = Vector_gender),
-         cholesterol_fct = factor(cholesterol, levels = Vector_levels_glucose_and_cholesterol),
-         glucose_fct = factor(glucose, levels= Vector_levels_glucose_and_cholesterol),
-         smoke_fct = factor(smoke, levels = Factor_Y_N),
-         alcohol_fct = factor(alcohol_intake, levels = Factor_Y_N),
-         physical_activity_fct = factor(physical_activity, levels = Factor_Y_N),
-         cv_disease_fct = factor(cv_disease, levels = Factor_Y_N)) |> 
+         cholesterol_fct = factor(cholesterol, levels = Vector_levels_glu_and_cho),
+         glucose_fct = factor(glucose, levels= Vector_levels_glu_and_cho),
+         smoke_fct = factor(smoke, levels = Vector_yes_no),
+         alcohol_fct = factor(alcohol_intake, levels = Vector_yes_no),
+         physical_activity_fct = factor(physical_activity, levels = Vector_yes_no),
+         cv_disease_fct = factor(cv_disease, levels = Vector_yes_no)) |> 
   #Selecting the new column factors and numeric variables
-  select(age, gender_fct, height, weight, systolic, diastolic, cholesterol_fct, glucose_fct, smoke_fct, alcohol_fct, physical_activity_fct, cv_disease_fct, bmi) |> 
+  select(age, 
+         gender_fct, 
+         height, 
+         weight, 
+         systolic, 
+         diastolic, 
+         cholesterol_fct, 
+         glucose_fct, 
+         smoke_fct, 
+         alcohol_fct, 
+         physical_activity_fct, 
+         cv_disease_fct, 
+         bmi) |> 
   #Renaming the colums 
   rename(gender = gender_fct,
          cholesterol = cholesterol_fct,
