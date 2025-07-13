@@ -1,4 +1,4 @@
-age,gender,height,weight,systolic,diastolic,bmi,cholesterol,glucose,smoke,alcohol_intake,physical_act,Cardiocascular_disease
+age,gender,height,weight,systolic,diastolic,bmi,cholesterol,glucose,smoke,alcohol_intake,physical_act,Cardiovascular_disease
 51,Male,168,62,110,80,22,Normal,Normal,No,No,Yes,No
 56,Female,156,85,140,90,34.9,Extremely High,Normal,No,No,Yes,Yes
 52,Female,165,64,130,70,23.5,Extremely High,Normal,No,No,No,Yes

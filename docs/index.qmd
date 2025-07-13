@@ -36,6 +36,7 @@ Loading Packages
 # Load Packages
 library(tidyverse)
 library(here) 
+library(ggthemes)
 # Read Data 
 Cardiac_raw_data <- read.csv(here::here("data/raw/cardio_raw_data.csv"))
 ```
@@ -145,12 +146,56 @@ Tidied_cardiac_data <- Cardiac_raw_data |>
          smoke = smoke_fct,
          alcohol_intake = alcohol_fct,
          physical_act= physical_activity_fct,
-         Cardiocascular_disease = cv_disease_fct) |> 
+         Cardiovascular_disease = cv_disease_fct) |> 
   #Relocating bmi after diastolic 
   relocate(bmi, .after = diastolic)
 
 #Saving results 
 write_csv(Tidied_cardiac_data, here::here("data/processed/tidied_Cardiac_data.csv"))
+```
+
+Data visualization.
+
+First of All, we will read the tidied dataset that we created in the previous section.
+
+```{r}
+Tidied_cardiac_data <- read.csv(here::here("data/processed/tidied_Cardiac_data.csv"))
+```
+
+In this part, we show the visualization of the data set in terms of relevant information. Regarding the information of this tidied data set, we would look for information that says if there is any relation between High pressure (over 130/80 mmHg) and the presence of Cholesterol and CardioVascular disease.
+
+Which set of group its more likely to have cardiovascular disease at a certain age.
+
+Relation between BMI and level of glucose.
+
+a Cardiac disease with the intake of alcohol, smoking and physical activity.
+
+High Pressure vs Cholesterol and Cardiovascular disease.
+
+```{r}
+
+High_Pressure_Cholesterol_CV_disease<- Tidied_cardiac_data |> 
+  select(systolic, diastolic, cholesterol, Cardiovascular_disease) |> 
+  filter(systolic >= 130 & diastolic >= 80) |> 
+  mutate(High_Pressure = (systolic + diastolic) / 2)
+
+
+ggplot(data = High_Pressure_Cholesterol_CV_disease, 
+       mapping = aes(x = cholesterol,
+                     y = High_Pressure, 
+                     fill= Cardiovascular_disease)) + 
+  geom_boxplot(outlier.shape = NA) +
+  scale_y_continuous(breaks = seq(100, 145, 5), limits = c(100, 145)) +
+  scale_fill_brewer(type = "qual", palette = 5) +
+  labs(title = "Hypertension and Cholesterol and Cardiovascular diseases",
+       subtitle = "Prevalence of Cardiovascular Disease in Individuals with Levels of Cholesterol and Blood Pressure",
+       x = "Cholesterol levels",
+       y = "High blood pressure (mean mmHg)",
+       fill = "Prevalence of Cardiovascular diseases",
+       caption = "Data: Tidied Cardiac dataset."
+  ) +
+  theme_minimal(base_size = 12) 
+
 ```
 
 # Results

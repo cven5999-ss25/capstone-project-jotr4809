@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jose Daniel Trujillo Sandoval">
-<meta name="dcterms.date" content="2025-07-09">
+<meta name="dcterms.date" content="2025-07-13">
 
 <title>Data exploration for Heart diseases and common habits</title>
 <style>
@@ -127,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 9, 2025</p>
+      <p class="date">July 13, 2025</p>
     </div>
   </div>
   
@@ -153,8 +153,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Data </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/raw/cardio_raw_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Data </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Cardiac_raw_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/raw/cardio_raw_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-exploration-approach" class="level2">
@@ -779,12 +780,52 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 <span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">smoke =</span> smoke_fct,</span>
 <span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">alcohol_intake =</span> alcohol_fct,</span>
 <span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">physical_act=</span> physical_activity_fct,</span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">Cardiocascular_disease =</span> cv_disease_fct) <span class="sc">|&gt;</span> </span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">Cardiovascular_disease =</span> cv_disease_fct) <span class="sc">|&gt;</span> </span>
 <span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Relocating bmi after diastolic </span></span>
 <span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(bmi, <span class="at">.after =</span> diastolic)</span>
 <span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Saving results </span></span>
 <span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(Tidied_cardiac_data, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/tidied_Cardiac_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Data visualization.</p>
+<p>First of All, we will read the tidied dataset that we created in the previous section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Tidied_cardiac_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/tidied_Cardiac_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this part, we show the visualization of the data set in terms of relevant information. Regarding the information of this tidied data set, we would look for information that says if there is any relation between High pressure (over 130/80 mmHg) and the presence of Cholesterol and CardioVascular disease.</p>
+<p>Which set of group its more likely to have cardiovascular disease at a certain age.</p>
+<p>Relation between BMI and level of glucose.</p>
+<p>a Cardiac disease with the intake of alcohol, smoking and physical activity.</p>
+<p>High Pressure vs Cholesterol and Cardiovascular disease.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>High_Pressure_Cholesterol_CV_disease<span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(systolic, diastolic, cholesterol, Cardiovascular_disease) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(systolic <span class="sc">&gt;=</span> <span class="dv">130</span> <span class="sc">&amp;</span> diastolic <span class="sc">&gt;=</span> <span class="dv">80</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">High_Pressure =</span> (systolic <span class="sc">+</span> diastolic) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> High_Pressure_Cholesterol_CV_disease, </span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cholesterol,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> High_Pressure, </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill=</span> Cardiovascular_disease)) <span class="sc">+</span> <span class="co">#agrega colores en base a una variable </span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">145</span>, <span class="dv">5</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">145</span>)) <span class="sc">+</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">type =</span> <span class="st">"qual"</span>, <span class="at">palette =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Hypertension and Cholesterol and Cardiovascular diseases"</span>,</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Prevalence of Cardiovascular Disease in Individuals with Normal, High, and Extremely High Levels of Cholesterol and Blood Pressure"</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Cholesterol levels"</span>,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"High blood pressure (mean mmHg)"</span>,</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Prevalencee of Cardio vascular diseases"</span>,</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: Tidied Cardiac dataset."</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 </section>
