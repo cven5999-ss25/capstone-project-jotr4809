@@ -22,7 +22,7 @@ abstract:
 license: "CC BY"
 citation: 
   container-title: My Blog
-  url: https://www.example.com
+  url: https://cven5999-ss25.github.io/capstone-project-jotr4809/
 bibliography: references.bib
 csl: apa.csl
 editor: visual
