@@ -14,7 +14,15 @@ date: today
 format: 
   html:
     toc: true
-    toc-depth: 2
+    toc-depth: 4
+abstract: 
+  The abstract will be placed here. Breaks can be added by hitting return on the keyboard.
+license: "CC BY"
+citation: 
+  container-title: My Blog
+  url: https://www.example.com
+bibliography: references.bib
+csl: apa.csl
 editor: visual
 execute:
   warning: false
@@ -24,11 +32,15 @@ execute:
 
 # Introduction
 
-This project would focus on assessing habits related to heart diseases. The data set contains information of random patients, Systolic and Diastolic heart rates, Body mass index, height and weight, and common habits like drinking and smoking
+This project focuses on assessing habits associated with heart disease. The dataset includes information from randomly selected patients, covering systolic and diastolic blood pressure, body mass index (BMI), height and weight, as well as common lifestyle habits such as alcohol consumption and smoking.
+
+Throughout the project, we analyzed the prevalence of unhealthy habits and how these correlate with the presence of cardiovascular diseases (CVDs). The initial dataset was obtained from a public GitHub repository.
 
 # Methods
 
 ## Reading the Data
+
+Here we present all the libraries that are going to be used along the project, and also the location of the initial data set.
 
 Loading Packages
 
@@ -44,7 +56,9 @@ Cardiac_raw_data <- read.csv(here::here("data/raw/cardio_raw_data.csv"))
 
 ## Data Exploration Approach
 
-This dasaset was obtained from
+This dataset was obtained from a GitHub repository. The initial exploration included viewing the head of the data to get an overview of the variables, inspecting the data types, and examining the tail of the dataset to identify any potential inconsistencies or anomalies.
+
+We also checked the dimensions of the dataset to ensure that all variables had the same number of observations. To clean the data, we addressed any missing values (NA values) and verified the integrity of categorical variables. This was done by summarizing the data, using `count(n)` for categorical variables to detect any unexpected entries, and calculating the mean for numerical variables to assess and handle missing data appropriately.
 
 ```{r}
 
@@ -110,6 +124,10 @@ Cardiac_raw_data |>
 
 ## Initial Data Tidying
 
+We began by creating vectors for the categorical variables. In this step, we defined binary vectors for "Yes" and "No" responses, gender ("Female" and "Male"), and cholesterol and glucose levels, categorized as "Extremely High," "High," and "Normal."
+
+After creating these vectors, we saved the tidied dataset into a new object in preparation for exporting it as a csv file. Within this object, we mutated the categorical variables into factors, renamed them for clarity, and reordered the columns to improve the dataset's presentation and readability.
+
 ```{r}
 #Creating vectors that would be converted into factors later 
 Vector_yes_no <- c("Yes", "No") #This vector would be use into the Yes No answers for Smoking, alcohol, physical activity and cardiovascular disease 
@@ -157,7 +175,7 @@ Tidied_cardiac_data <- Cardiac_raw_data |>
 write_csv(Tidied_cardiac_data, here::here("data/processed/tidied_Cardiac_data.csv"))
 ```
 
-Data visualization.
+### Data visualization.
 
 First of All, we will read the tidied dataset that we created in the previous section.
 
@@ -170,6 +188,8 @@ In this section, we present visualizations of the dataset focused on extracting 
 Additionally, we seek to answer the question of which age groups have more cardiovascular disease, based on the available data.
 
 Finally, we examine the prevalence of cardiovascular disease in relation to lifestyle factors, such as alcohol consumption, smoking, and physical activity.
+
+#### Figure 1.
 
 **Hypertension vs Cholesterol levels and Cardiovascular diseases.**
 
@@ -210,6 +230,8 @@ From the chart, we observe that individuals with high and normal cholesterol lev
 
 In contrast, for the group with extremely high cholesterol levels, there is no significant difference in mean blood pressure between individuals with and without CVD; both subgroups show an average close to 115 mmHg.
 
+#### Figure 2.
+
 **Age distribution and Cardiovascular disease.**
 
 ```{r}
@@ -240,6 +262,8 @@ ggplot(data = cv_disease_age,
 @fig-2 presents a histogram illustrating the age distribution of the population, grouped in two-year intervals, starting from 38 years old and ending at 66 years old. The chart also differentiates between individuals with and without cardiovascular disease (CVD): light green bars represent people without CVD, while light orange bars represent those with CVD.
 
 The distribution of both groups follows a pattern similar to a Gaussian bell curve, with a noticeable peak in the 56–58 age range. This visualization provides key insights: overall, we can observe that younger individuals are less likely to have CVD, whereas the prevalence of CVD increases with age, reaching almost 80% in the 65–66 age group.
+
+#### Figure 3.
 
 **Cardiac disease with the intake of alcohol, smoking and physical activity.**
 
@@ -283,7 +307,9 @@ Habits",
 
 Regarding alcohol consumption, the data shows that very few individuals engage in this habit, regardless of whether they have CVD or not. In terms of physical activity, both groups, those with and without CVD, show a high prevalence of regular exercise. Finally, in the case of smoking, only a small portion of individuals in either group report smoking, though this number is slightly higher than that for alcohol consumption.
 
-**Table 1. Statistics.**
+#### Table 1.
+
+**Statistics.**
 
 ```{r}
 #| label: tbl-1
@@ -314,10 +340,30 @@ The table displays the mean values per age group, along with the corresponding s
 
 # Results
 
-\[This will be the core of your analysis with specific requirements\]
+@fig-1 shows the prevalence of cardiovascular diseases among individuals with a mean blood pressure above 110 mmHg and normal or high cholesterol levels. This pattern may be explained by reduced arterial and venous lumen, limiting blood flow, as discussed in @felix2013cholesterol.
+
+However, for individuals with extremely high cholesterol levels, there is no significant difference in the presence or absence of cardiovascular disease. Interestingly, the most uncommon cases appear in the high cholesterol group, particularly among those with cardiovascular disease, driven by one outlier with a mean blood pressure around 145 mmHg.
+
+@fig-2 shows the distribution of ages and the prevalence of cardiovascular diseases (CVDs) across different age ranges. In this case, the data reveals a clear trend: as age increases, the prevalence of CVDs also rises, with a more noticeable increase starting from age 56 and above.
+
+In fact, the older the individuals, the more common cardiovascular diseases become, indicating a strong correlation between aging and the risk of developing CVD.
+
+@fig-3 shows a triple-variable correlation graph, illustrating the frequency and distribution of cardiovascular disease (CVD) in relation to unhealthy habits such as alcohol consumption, smoking, and lack of physical activity.
+
+Interestingly, the data shows that individuals who smoke or consume alcohol appear to have a lower prevalence of CVD. However, this trend is likely due to the small number of individuals in the dataset who report engaging in these habits, which limits the strength of this observation.
+
+In contrast, when it comes to physical activity, there is a clearer pattern: individuals who exercise regularly tend to have a lower prevalence of CVD, while those who do not engage in physical activity show a higher incidence of cardiovascular conditions.
+
+in @tbl-1 presents the distribution and average values of age, systolic and diastolic blood pressure, and BMI. The data shown includes only participants who meet all of the following criteria: high blood pressure (above 130/80 mmHg), are active smokers, consume alcohol, lack physical activity, and have been diagnosed with cardiovascular disease (CVD).
+
+From the table, we can observe that the most common age among this group is 62 years. Notably, none of the individuals have a systolic pressure below 140 mmHg or a diastolic pressure below 83 mmHg, confirming the presence of consistently high blood pressure.
+
+In terms of BMI, all participants have values above 27, which falls into the overweight category. Some individuals even reach BMI values consistent with obesity, highlighting an elevated risk profile across multiple health factors [@khanna2022body].
 
 # Conclusions
 
 ## Summary of Findings
 
 ## Questions and Next Steps
+
+## Bibliographies

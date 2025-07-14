@@ -57,7 +57,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="index_files/libs/clipboard/clipboard.min.js"></script>
@@ -82,19 +102,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul class="collapse">
+  <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#reading-the-data" id="toc-reading-the-data" class="nav-link" data-scroll-target="#reading-the-data">Reading the Data</a></li>
   <li><a href="#data-exploration-approach" id="toc-data-exploration-approach" class="nav-link" data-scroll-target="#data-exploration-approach">Data Exploration Approach</a></li>
-  <li><a href="#initial-data-tidying" id="toc-initial-data-tidying" class="nav-link" data-scroll-target="#initial-data-tidying">Initial Data Tidying</a></li>
+  <li><a href="#initial-data-tidying" id="toc-initial-data-tidying" class="nav-link" data-scroll-target="#initial-data-tidying">Initial Data Tidying</a>
+  <ul class="collapse">
+  <li><a href="#data-visualization." id="toc-data-visualization." class="nav-link" data-scroll-target="#data-visualization.">Data visualization.</a>
+  <ul class="collapse">
+  <li><a href="#figure-1." id="toc-figure-1." class="nav-link" data-scroll-target="#figure-1.">Figure 1.</a></li>
+  <li><a href="#figure-2." id="toc-figure-2." class="nav-link" data-scroll-target="#figure-2.">Figure 2.</a></li>
+  <li><a href="#figure-3." id="toc-figure-3." class="nav-link" data-scroll-target="#figure-3.">Figure 3.</a></li>
+  <li><a href="#table-1." id="toc-table-1." class="nav-link" data-scroll-target="#table-1.">Table 1.</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">Summary of Findings</a></li>
   <li><a href="#questions-and-next-steps" id="toc-questions-and-next-steps" class="nav-link" data-scroll-target="#questions-and-next-steps">Questions and Next Steps</a></li>
+  <li><a href="#bibliographies" id="toc-bibliographies" class="nav-link" data-scroll-target="#bibliographies">Bibliographies</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -134,6 +164,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    The abstract will be placed here. Breaks can be added by hitting return on the keyboard.
+  </div>
+</div>
 
 
 </header>
@@ -142,12 +178,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This project would focus on assessing habits related to heart diseases. The data set contains information of random patients, Systolic and Diastolic heart rates, Body mass index, height and weight, and common habits like drinking and smoking</p>
+<p>This project focuses on assessing habits associated with heart disease. The dataset includes information from randomly selected patients, covering systolic and diastolic blood pressure, body mass index (BMI), height and weight, as well as common lifestyle habits such as alcohol consumption and smoking.</p>
+<p>Throughout the project, we analyzed the prevalence of unhealthy habits and how these correlate with the presence of cardiovascular diseases (CVDs). The initial dataset was obtained from a public GitHub repository.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
 <section id="reading-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="reading-the-data">Reading the Data</h2>
+<p>Here we present all the libraries that are going to be used along the project, and also the location of the initial data set.</p>
 <p>Loading Packages</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Packages</span></span>
@@ -161,7 +199,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-exploration-approach" class="level2">
 <h2 class="anchored" data-anchor-id="data-exploration-approach">Data Exploration Approach</h2>
-<p>This dasaset was obtained from</p>
+<p>This dataset was obtained from a GitHub repository. The initial exploration included viewing the head of the data to get an overview of the variables, inspecting the data types, and examining the tail of the dataset to identify any potential inconsistencies or anomalies.</p>
+<p>We also checked the dimensions of the dataset to ensure that all variables had the same number of observations. To clean the data, we addressed any missing values (NA values) and verified the integrity of categorical variables. This was done by summarizing the data, using <code>count(n)</code> for categorical variables to detect any unexpected entries, and calculating the mean for numerical variables to assess and handle missing data appropriately.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Viewing the first rows </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Cardiac_raw_data) <span class="co">#Looks like everything is good at the first 7 rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -743,6 +782,8 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 </section>
 <section id="initial-data-tidying" class="level2">
 <h2 class="anchored" data-anchor-id="initial-data-tidying">Initial Data Tidying</h2>
+<p>We began by creating vectors for the categorical variables. In this step, we defined binary vectors for “Yes” and “No” responses, gender (“Female” and “Male”), and cholesterol and glucose levels, categorized as “Extremely High,” “High,” and “Normal.”</p>
+<p>After creating these vectors, we saved the tidied dataset into a new object in preparation for exporting it as a csv file. Within this object, we mutated the categorical variables into factors, renamed them for clarity, and reordered the columns to improve the dataset’s presentation and readability.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating vectors that would be converted into factors later </span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Vector_yes_no <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Yes"</span>, <span class="st">"No"</span>) <span class="co">#This vector would be use into the Yes No answers for Smoking, alcohol, physical activity and cardiovascular disease </span></span>
@@ -789,7 +830,8 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 <span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Saving results </span></span>
 <span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(Tidied_cardiac_data, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/tidied_Cardiac_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Data visualization.</p>
+<section id="data-visualization." class="level3">
+<h3 class="anchored" data-anchor-id="data-visualization.">Data visualization.</h3>
 <p>First of All, we will read the tidied dataset that we created in the previous section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Tidied_cardiac_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/tidied_Cardiac_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -797,6 +839,8 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 <p>In this section, we present visualizations of the dataset focused on extracting relevant insights. Specifically, we aim to explore whether there is a relationship between high blood pressure (defined as values above 130/80 mmHg), cholesterol levels, and the presence of cardiovascular disease (CVD).</p>
 <p>Additionally, we seek to answer the question of which age groups have more cardiovascular disease, based on the available data.</p>
 <p>Finally, we examine the prevalence of cardiovascular disease in relation to lifestyle factors, such as alcohol consumption, smoking, and physical activity.</p>
+<section id="figure-1." class="level4">
+<h4 class="anchored" data-anchor-id="figure-1.">Figure 1.</h4>
 <p><strong>Hypertension vs Cholesterol levels and Cardiovascular diseases.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>High_Pressure_Cholesterol_CV_disease<span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
@@ -837,6 +881,9 @@ Figure&nbsp;1: Hypertension vs Cholesterol levels and Cardiovascular diseases
 <p>The figure uses a boxplot to display the distribution of mean blood pressure across the different cholesterol level groups, highlighting the average values, identifying outliers, and illustrating the prevalence of CVD within each group.</p>
 <p>From the chart, we observe that individuals with high and normal cholesterol levels tend to have higher blood pressure if they also have cardiovascular disease, compared to those without CVD. Notably, these groups also show a higher average blood pressure, around 115 mmHg, among individuals with CVD, while those without CVD have a lower mean of approximately 110 mmHg.</p>
 <p>In contrast, for the group with extremely high cholesterol levels, there is no significant difference in mean blood pressure between individuals with and without CVD; both subgroups show an average close to 115 mmHg.</p>
+</section>
+<section id="figure-2." class="level4">
+<h4 class="anchored" data-anchor-id="figure-2.">Figure 2.</h4>
 <p><strong>Age distribution and Cardiovascular disease.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cv_disease_age <span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
@@ -872,6 +919,9 @@ Figure&nbsp;2: Age distribution and Cardiovascular disease.
 </div>
 <p><a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> presents a histogram illustrating the age distribution of the population, grouped in two-year intervals, starting from 38 years old and ending at 66 years old. The chart also differentiates between individuals with and without cardiovascular disease (CVD): light green bars represent people without CVD, while light orange bars represent those with CVD.</p>
 <p>The distribution of both groups follows a pattern similar to a Gaussian bell curve, with a noticeable peak in the 56–58 age range. This visualization provides key insights: overall, we can observe that younger individuals are less likely to have CVD, whereas the prevalence of CVD increases with age, reaching almost 80% in the 65–66 age group.</p>
+</section>
+<section id="figure-3." class="level4">
+<h4 class="anchored" data-anchor-id="figure-3.">Figure 3.</h4>
 <p><strong>Cardiac disease with the intake of alcohol, smoking and physical activity.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>bad_habits <span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
@@ -917,7 +967,10 @@ Figure&nbsp;3: Cardiac disease with the intake of alcohol, smoking and physical 
 </div>
 <p><a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a> is a grouped bar chart displaying the frequency of individuals engaging in unhealthy habits such as alcohol consumption, lack of physical activity, and smoking. The x-axis represents the presence or absence of cardiovascular disease (CVD), while the bar colors indicate whether or not the individual engages in the activity: light green for <em>No</em> and light orange for <em>Yes</em>.</p>
 <p>Regarding alcohol consumption, the data shows that very few individuals engage in this habit, regardless of whether they have CVD or not. In terms of physical activity, both groups, those with and without CVD, show a high prevalence of regular exercise. Finally, in the case of smoking, only a small portion of individuals in either group report smoking, though this number is slightly higher than that for alcohol consumption.</p>
-<p><strong>Table 1. Statistics.</strong></p>
+</section>
+<section id="table-1." class="level4">
+<h4 class="anchored" data-anchor-id="table-1.">Table 1.</h4>
+<p><strong>Statistics.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Tidied_cardiac_data <span class="sc">|&gt;</span>  </span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">54</span> <span class="sc">&amp;</span> systolic <span class="sc">&gt;=</span> <span class="dv">130</span> <span class="sc">&amp;</span> diastolic <span class="sc">&gt;=</span> <span class="dv">80</span> <span class="sc">&amp;</span> smoke <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">&amp;</span> alcohol_intake <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">&amp;</span> physical_act <span class="sc">==</span> <span class="st">"No"</span> <span class="sc">&amp;</span> Cardiovascular_disease <span class="sc">==</span> <span class="st">"Yes"</span>) <span class="sc">|&gt;</span> </span>
@@ -942,23 +995,23 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
 </figcaption>
 <div aria-describedby="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="cgtaavbuja" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cgtaavbuja table {
+<div id="cvwiufjyct" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cvwiufjyct table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cgtaavbuja thead, #cgtaavbuja tbody, #cgtaavbuja tfoot, #cgtaavbuja tr, #cgtaavbuja td, #cgtaavbuja th {
+#cvwiufjyct thead, #cvwiufjyct tbody, #cvwiufjyct tfoot, #cvwiufjyct tr, #cvwiufjyct td, #cvwiufjyct th {
   border-style: none;
 }
 
-#cgtaavbuja p {
+#cvwiufjyct p {
   margin: 0;
   padding: 0;
 }
 
-#cgtaavbuja .gt_table {
+#cvwiufjyct .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -984,12 +1037,12 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-left-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_caption {
+#cvwiufjyct .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cgtaavbuja .gt_title {
+#cvwiufjyct .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1001,7 +1054,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-bottom-width: 0;
 }
 
-#cgtaavbuja .gt_subtitle {
+#cvwiufjyct .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1013,7 +1066,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-top-width: 0;
 }
 
-#cgtaavbuja .gt_heading {
+#cvwiufjyct .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1025,13 +1078,13 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-right-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_bottom_border {
+#cvwiufjyct .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_col_headings {
+#cvwiufjyct .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1046,7 +1099,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-right-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_col_heading {
+#cvwiufjyct .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1066,7 +1119,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   overflow-x: hidden;
 }
 
-#cgtaavbuja .gt_column_spanner_outer {
+#cvwiufjyct .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1078,15 +1131,15 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   padding-right: 4px;
 }
 
-#cgtaavbuja .gt_column_spanner_outer:first-child {
+#cvwiufjyct .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cgtaavbuja .gt_column_spanner_outer:last-child {
+#cvwiufjyct .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cgtaavbuja .gt_column_spanner {
+#cvwiufjyct .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1098,11 +1151,11 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   width: 100%;
 }
 
-#cgtaavbuja .gt_spanner_row {
+#cvwiufjyct .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cgtaavbuja .gt_group_heading {
+#cvwiufjyct .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1128,7 +1181,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   text-align: left;
 }
 
-#cgtaavbuja .gt_empty_group_heading {
+#cvwiufjyct .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1143,15 +1196,15 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   vertical-align: middle;
 }
 
-#cgtaavbuja .gt_from_md > :first-child {
+#cvwiufjyct .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cgtaavbuja .gt_from_md > :last-child {
+#cvwiufjyct .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cgtaavbuja .gt_row {
+#cvwiufjyct .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1170,7 +1223,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   overflow-x: hidden;
 }
 
-#cgtaavbuja .gt_stub {
+#cvwiufjyct .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1183,7 +1236,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   padding-right: 5px;
 }
 
-#cgtaavbuja .gt_stub_row_group {
+#cvwiufjyct .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1197,15 +1250,15 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   vertical-align: top;
 }
 
-#cgtaavbuja .gt_row_group_first td {
+#cvwiufjyct .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cgtaavbuja .gt_row_group_first th {
+#cvwiufjyct .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cgtaavbuja .gt_summary_row {
+#cvwiufjyct .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1215,16 +1268,16 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   padding-right: 5px;
 }
 
-#cgtaavbuja .gt_first_summary_row {
+#cvwiufjyct .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_first_summary_row.thick {
+#cvwiufjyct .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cgtaavbuja .gt_last_summary_row {
+#cvwiufjyct .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1234,7 +1287,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_grand_summary_row {
+#cvwiufjyct .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1244,7 +1297,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   padding-right: 5px;
 }
 
-#cgtaavbuja .gt_first_grand_summary_row {
+#cvwiufjyct .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1254,7 +1307,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-top-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_last_grand_summary_row_top {
+#cvwiufjyct .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1264,11 +1317,11 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_striped {
+#cvwiufjyct .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cgtaavbuja .gt_table_body {
+#cvwiufjyct .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1277,7 +1330,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_footnotes {
+#cvwiufjyct .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1291,7 +1344,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-right-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_footnote {
+#cvwiufjyct .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1300,7 +1353,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   padding-right: 5px;
 }
 
-#cgtaavbuja .gt_sourcenotes {
+#cvwiufjyct .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1314,7 +1367,7 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   border-right-color: #D3D3D3;
 }
 
-#cgtaavbuja .gt_sourcenote {
+#cvwiufjyct .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1322,72 +1375,72 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
   padding-right: 5px;
 }
 
-#cgtaavbuja .gt_left {
+#cvwiufjyct .gt_left {
   text-align: left;
 }
 
-#cgtaavbuja .gt_center {
+#cvwiufjyct .gt_center {
   text-align: center;
 }
 
-#cgtaavbuja .gt_right {
+#cvwiufjyct .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cgtaavbuja .gt_font_normal {
+#cvwiufjyct .gt_font_normal {
   font-weight: normal;
 }
 
-#cgtaavbuja .gt_font_bold {
+#cvwiufjyct .gt_font_bold {
   font-weight: bold;
 }
 
-#cgtaavbuja .gt_font_italic {
+#cvwiufjyct .gt_font_italic {
   font-style: italic;
 }
 
-#cgtaavbuja .gt_super {
+#cvwiufjyct .gt_super {
   font-size: 65%;
 }
 
-#cgtaavbuja .gt_footnote_marks {
+#cvwiufjyct .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cgtaavbuja .gt_asterisk {
+#cvwiufjyct .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cgtaavbuja .gt_indent_1 {
+#cvwiufjyct .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cgtaavbuja .gt_indent_2 {
+#cvwiufjyct .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cgtaavbuja .gt_indent_3 {
+#cvwiufjyct .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cgtaavbuja .gt_indent_4 {
+#cvwiufjyct .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cgtaavbuja .gt_indent_5 {
+#cvwiufjyct .gt_indent_5 {
   text-indent: 25px;
 }
 
-#cgtaavbuja .katex-display {
+#cvwiufjyct .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#cgtaavbuja div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#cvwiufjyct div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1548,12 +1601,24 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
 </figure>
 </div>
 </div>
-<p><a href="#tbl-1" class="quarto-xref">Table&nbsp;1</a> presents the distribution and averages of key health indicators for individuals aged 54 and above, including systolic blood pressure, diastolic blood pressure, and BMI. The table displays the mean values by age, along with the corresponding standard deviations for each variable, providing insight into both central tendencies and data variability within this age group.</p>
+<p><a href="#tbl-1" class="quarto-xref">Table&nbsp;1</a> presents the distribution and averages of key health indicators for individuals aged 54 and above, filtered by specific risk factors. These include: systolic blood pressure over 130 mmHg, diastolic blood pressure over 80 mmHg, smoking status, alcohol consumption, lack of physical activity, presence of cardiovascular disease (CVD), and BMI.</p>
+<p>The table displays the mean values per age group, along with the corresponding standard deviations for each variable, providing insight into both central tendencies and data variability among older adults with elevated cardiovascular risk.</p>
+</section>
+</section>
 </section>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<p>[This will be the core of your analysis with specific requirements]</p>
+<p><a href="#fig-1" class="quarto-xref">Figure&nbsp;1</a> shows the prevalence of cardiovascular diseases among individuals with a mean blood pressure above 110 mmHg and normal or high cholesterol levels. This pattern may be explained by reduced arterial and venous lumen, limiting blood flow, as discussed in <span class="citation" data-cites="felix2013cholesterol">Félix-Redondo et al. (<a href="#ref-felix2013cholesterol" role="doc-biblioref">2013</a>)</span>.</p>
+<p>However, for individuals with extremely high cholesterol levels, there is no significant difference in the presence or absence of cardiovascular disease. Interestingly, the most uncommon cases appear in the high cholesterol group, particularly among those with cardiovascular disease, driven by one outlier with a mean blood pressure around 145 mmHg.</p>
+<p><a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> shows the distribution of ages and the prevalence of cardiovascular diseases (CVDs) across different age ranges. In this case, the data reveals a clear trend: as age increases, the prevalence of CVDs also rises, with a more noticeable increase starting from age 56 and above.</p>
+<p>In fact, the older the individuals, the more common cardiovascular diseases become, indicating a strong correlation between aging and the risk of developing CVD.</p>
+<p><a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a> shows a triple-variable correlation graph, illustrating the frequency and distribution of cardiovascular disease (CVD) in relation to unhealthy habits such as alcohol consumption, smoking, and lack of physical activity.</p>
+<p>Interestingly, the data shows that individuals who smoke or consume alcohol appear to have a lower prevalence of CVD. However, this trend is likely due to the small number of individuals in the dataset who report engaging in these habits, which limits the strength of this observation.</p>
+<p>In contrast, when it comes to physical activity, there is a clearer pattern: individuals who exercise regularly tend to have a lower prevalence of CVD, while those who do not engage in physical activity show a higher incidence of cardiovascular conditions.</p>
+<p>in <a href="#tbl-1" class="quarto-xref">Table&nbsp;1</a> presents the distribution and average values of age, systolic and diastolic blood pressure, and BMI. The data shown includes only participants who meet all of the following criteria: high blood pressure (above 130/80 mmHg), are active smokers, consume alcohol, lack physical activity, and have been diagnosed with cardiovascular disease (CVD).</p>
+<p>From the table, we can observe that the most common age among this group is 62 years. Notably, none of the individuals have a systolic pressure below 140 mmHg or a diastolic pressure below 83 mmHg, confirming the presence of consistently high blood pressure.</p>
+<p>In terms of BMI, all participants have values above 27, which falls into the overweight category. Some individuals even reach BMI values consistent with obesity, highlighting an elevated risk profile across multiple health factors <span class="citation" data-cites="khanna2022body">(<a href="#ref-khanna2022body" role="doc-biblioref">Khanna et al., 2022</a>)</span>.</p>
 </section>
 <section id="conclusions" class="level1">
 <h1>Conclusions</h1>
@@ -1563,9 +1628,32 @@ Table&nbsp;1: Statitics for Age groups and averages for age, systolic, diastolic
 <section id="questions-and-next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="questions-and-next-steps">Questions and Next Steps</h2>
 </section>
+<section id="bibliographies" class="level2 unnumbered">
+
+
+</section>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliographies</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-felix2013cholesterol" class="csl-entry" role="listitem">
+Félix-Redondo, F. J., Grau, M., &amp; Fernández-Bergés, D. (2013). Cholesterol and cardiovascular disease in the elderly. Facts and gaps. <em>Aging and Disease</em>, <em>4</em>(3), 154.
+</div>
+<div id="ref-khanna2022body" class="csl-entry" role="listitem">
+Khanna, D., Peltzer, C., Kahar, P., &amp; Parmar, M. S. (2022). Body mass index (BMI): A screening tool analysis. <em>Cureus</em>, <em>14</em>(2).
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{daniel_trujillo_sandoval2025,
+  author = {Daniel Trujillo Sandoval, Jose},
+  title = {Data Exploration for {Heart} Diseases and Common Habits},
+  date = {2025-07-14},
+  url = {https://www.example.com},
+  langid = {en},
+  abstract = {The abstract will be placed here. Breaks can be added by
+    hitting return on the keyboard.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-daniel_trujillo_sandoval2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Daniel Trujillo Sandoval, J. (2025, July 14). <em>Data exploration for
+Heart diseases and common habits</em>. My Blog. <a href="https://www.example.com">https://www.example.com</a>
+</div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
