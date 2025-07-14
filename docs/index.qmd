@@ -37,11 +37,14 @@ Loading Packages
 library(tidyverse)
 library(here) 
 library(ggthemes)
+library(gt)
 # Read Data 
 Cardiac_raw_data <- read.csv(here::here("data/raw/cardio_raw_data.csv"))
 ```
 
 ## Data Exploration Approach
+
+This dasaset was obtained from
 
 ```{r}
 
@@ -171,6 +174,9 @@ Finally, we examine the prevalence of cardiovascular disease in relation to life
 **Hypertension vs Cholesterol levels and Cardiovascular diseases.**
 
 ```{r}
+#| label: fig-1
+#| fig-cap: Hypertension vs Cholesterol levels and Cardiovascular diseases
+
 
 High_Pressure_Cholesterol_CV_disease<- Tidied_cardiac_data |> 
   select(systolic, diastolic, cholesterol, Cardiovascular_disease) |> 
@@ -196,7 +202,7 @@ ggplot(data = High_Pressure_Cholesterol_CV_disease,
 
 ```
 
-Figure 1 presents a visualization comparing groups of individuals with extremely high, high, and normal cholesterol levels, distinguishing between those with and without cardiovascular disease (CVD). The dataset has been filtered to include only individuals with hypertension, defined as having an average systolic blood pressure above 130 mmHg and diastolic blood pressure above 80 mmHg.
+@fig-1 presents a visualization comparing groups of individuals with extremely high, high, and normal cholesterol levels, distinguishing between those with and without cardiovascular disease (CVD). The dataset has been filtered to include only individuals with hypertension, defined as having an average systolic blood pressure above 130 mmHg and diastolic blood pressure above 80 mmHg.
 
 The figure uses a boxplot to display the distribution of mean blood pressure across the different cholesterol level groups, highlighting the average values, identifying outliers, and illustrating the prevalence of CVD within each group.
 
@@ -207,6 +213,9 @@ In contrast, for the group with extremely high cholesterol levels, there is no s
 **Age distribution and Cardiovascular disease.**
 
 ```{r}
+#| label: fig-2
+#| fig-cap: Age distribution and Cardiovascular disease.
+
 cv_disease_age <- Tidied_cardiac_data |> 
   select(age, Cardiovascular_disease) 
   
@@ -228,13 +237,17 @@ ggplot(data = cv_disease_age,
 
 ```
 
-Figure 2 presents a histogram illustrating the age distribution of the population, grouped in two-year intervals, starting from 38 years old and ending at 66 years old. The chart also differentiates between individuals with and without cardiovascular disease (CVD): light green bars represent people without CVD, while light orange bars represent those with CVD.
+@fig-2 presents a histogram illustrating the age distribution of the population, grouped in two-year intervals, starting from 38 years old and ending at 66 years old. The chart also differentiates between individuals with and without cardiovascular disease (CVD): light green bars represent people without CVD, while light orange bars represent those with CVD.
 
 The distribution of both groups follows a pattern similar to a Gaussian bell curve, with a noticeable peak in the 56–58 age range. This visualization provides key insights: overall, we can observe that younger individuals are less likely to have CVD, whereas the prevalence of CVD increases with age, reaching almost 80% in the 65–66 age group.
 
 **Cardiac disease with the intake of alcohol, smoking and physical activity.**
 
 ```{r}
+#| label: fig-3
+#| fig-cap: Cardiac disease with the intake of alcohol, smoking and physical activity.
+
+
 bad_habits <- Tidied_cardiac_data |> 
   select(alcohol_intake, smoke, physical_act, Cardiovascular_disease) |> 
   group_by(alcohol_intake, smoke, physical_act, Cardiovascular_disease) |>
@@ -266,9 +279,38 @@ Habits",
 
 ```
 
-Figure 3 is a grouped bar chart displaying the frequency of individuals engaging in unhealthy habits such as alcohol consumption, lack of physical activity, and smoking. The x-axis represents the presence or absence of cardiovascular disease (CVD), while the bar colors indicate whether or not the individual engages in the activity: light green for *No* and light orange for *Yes*.
+@fig-3 is a grouped bar chart displaying the frequency of individuals engaging in unhealthy habits such as alcohol consumption, lack of physical activity, and smoking. The x-axis represents the presence or absence of cardiovascular disease (CVD), while the bar colors indicate whether or not the individual engages in the activity: light green for *No* and light orange for *Yes*.
 
 Regarding alcohol consumption, the data shows that very few individuals engage in this habit, regardless of whether they have CVD or not. In terms of physical activity, both groups, those with and without CVD, show a high prevalence of regular exercise. Finally, in the case of smoking, only a small portion of individuals in either group report smoking, though this number is slightly higher than that for alcohol consumption.
+
+**Table 1. Statistics.**
+
+```{r}
+#| label: tbl-1
+#| tbl-cap: Statitics for Age groups and averages for age, systolic, diastolic and bmi 
+
+
+Tidied_cardiac_data |>  
+  filter(age >= 54 & systolic >= 130 & diastolic >= 80 & smoke == "Yes" & alcohol_intake == "Yes" & physical_act == "No" & Cardiovascular_disease == "Yes") |> 
+  group_by(age) |>  
+  summarise(count = n(),
+            mean_age = mean(age),
+            mean_systolic = mean(systolic),
+            sd_systolic = sd(systolic),
+            mean_diastolic = mean(diastolic),
+            sd_diastolic = sd(diastolic),
+            mean_bmi = mean(bmi),
+            sd_bmi = sd(bmi)
+            ) |> 
+  ungroup() |> 
+  gt() |> 
+  fmt_number(columns = c(mean_systolic, mean_diastolic),
+             decimals = 1)
+```
+
+@tbl-1 presents the distribution and averages of key health indicators for individuals aged 54 and above, filtered by specific risk factors. These include: systolic blood pressure over 130 mmHg, diastolic blood pressure over 80 mmHg, smoking status, alcohol consumption, lack of physical activity, presence of cardiovascular disease (CVD), and BMI.
+
+The table displays the mean values per age group, along with the corresponding standard deviations for each variable, providing insight into both central tendencies and data variability among older adults with elevated cardiovascular risk.
 
 # Results
 
