@@ -16,7 +16,9 @@ format:
     toc: true
     toc-depth: 4
 abstract: 
-  The abstract will be placed here. Breaks can be added by hitting return on the keyboard.
+  This project explores the relationship between various health indicators, lifestyle habits, and the prevalence of cardiovascular diseases (CVDs) using a public dataset obtained from a GitHub repository. The analysis focused on key variables including age, systolic and diastolic blood pressure, cholesterol levels, glucose, BMI, and habits such as smoking, alcohol consumption, and physical activity. Data cleaning and transformation were performed to ensure consistency, and categorical variables were properly labeled and converted for analysis. 
+  The findings reveal that CVD prevalence increases significantly with age, especially in individuals over 56 years. People with high or normal cholesterol levels and elevated blood pressure tend to show a higher presence of CVDs, while those with extremely high cholesterol levels showed no clear difference. Furthermore, physical inactivity was strongly associated with the presence of cardiovascular disease, more so than smoking or alcohol intake. Additionally, individuals with CVD often presented with hypertension and BMI values indicating overweight or obesity. 
+  Future research could focus on the impact of height and weight, the role of glucose and diabetes, and the most common unhealthy behaviors by gender to further understand risk factors related to cardiovascular health.
 license: "CC BY"
 citation: 
   container-title: My Blog
@@ -364,6 +366,16 @@ In terms of BMI, all participants have values above 27, which falls into the ove
 
 ## Summary of Findings
 
+-   Individuals with normal and high cholesterol levels and mean blood pressure over 110 mmHg show a higher prevalence of CVD
+
+-   CVD prevalence increases with age, showing a sharp rise from age 56 and above.
+
+-   Due to the small number of individuals reporting alcohol consumption or smoking, their relation to CVD in this dataset appears weak or inconclusive.
+
+-   BMI values were above 27 in all cases, indicating overweight or obesity, which further increases CVD risk.
+
 ## Questions and Next Steps
+
+Some of the next steps for further analysis include exploring the relationship between height and weight and their impact on the prevalence of cardiovascular diseases (CVDs), with a particular focus on whether taller or heavier individuals are more susceptible. Additionally, it would be valuable to investigate the role of glucose levels and assess the potential influence of diabetes as a contributing factor to CVD. Another important direction would be to examine the most common unhealthy behaviors by gender, identifying whether patterns such as smoking, alcohol consumption, or lack of physical activity differ between males and females, and how these differences may affect cardiovascular risk.
 
 ## Bibliographies
