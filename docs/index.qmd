@@ -162,15 +162,13 @@ First of All, we will read the tidied dataset that we created in the previous se
 Tidied_cardiac_data <- read.csv(here::here("data/processed/tidied_Cardiac_data.csv"))
 ```
 
-In this part, we show the visualization of the data set in terms of relevant information. Regarding the information of this tidied data set, we would look for information that says if there is any relation between High pressure (over 130/80 mmHg) and the presence of Cholesterol and CardioVascular disease.
+In this section, we present visualizations of the dataset focused on extracting relevant insights. Specifically, we aim to explore whether there is a relationship between high blood pressure (defined as values above 130/80 mmHg), cholesterol levels, and the presence of cardiovascular disease (CVD).
 
-Which set of group its more likely to have cardiovascular disease at a certain age.
+Additionally, we seek to answer the question of which age groups have more cardiovascular disease, based on the available data.
 
-Relation between BMI and level of glucose.
+Finally, we examine the prevalence of cardiovascular disease in relation to lifestyle factors, such as alcohol consumption, smoking, and physical activity.
 
-a Cardiac disease with the intake of alcohol, smoking and physical activity.
-
-High Pressure vs Cholesterol and Cardiovascular disease.
+**Hypertension vs Cholesterol levels and Cardiovascular diseases.**
 
 ```{r}
 
@@ -198,7 +196,15 @@ ggplot(data = High_Pressure_Cholesterol_CV_disease,
 
 ```
 
-Age and Cardiovascular disease.
+Figure 1 presents a visualization comparing groups of individuals with extremely high, high, and normal cholesterol levels, distinguishing between those with and without cardiovascular disease (CVD). The dataset has been filtered to include only individuals with hypertension, defined as having an average systolic blood pressure above 130 mmHg and diastolic blood pressure above 80 mmHg.
+
+The figure uses a boxplot to display the distribution of mean blood pressure across the different cholesterol level groups, highlighting the average values, identifying outliers, and illustrating the prevalence of CVD within each group.
+
+From the chart, we observe that individuals with high and normal cholesterol levels tend to have higher blood pressure if they also have cardiovascular disease, compared to those without CVD. Notably, these groups also show a higher average blood pressure, around 115 mmHg, among individuals with CVD, while those without CVD have a lower mean of approximately 110 mmHg.
+
+In contrast, for the group with extremely high cholesterol levels, there is no significant difference in mean blood pressure between individuals with and without CVD; both subgroups show an average close to 115 mmHg.
+
+**Age distribution and Cardiovascular disease.**
 
 ```{r}
 cv_disease_age <- Tidied_cardiac_data |> 
@@ -221,6 +227,48 @@ ggplot(data = cv_disease_age,
   theme_minimal(base_size = 11) 
 
 ```
+
+Figure 2 presents a histogram illustrating the age distribution of the population, grouped in two-year intervals, starting from 38 years old and ending at 66 years old. The chart also differentiates between individuals with and without cardiovascular disease (CVD): light green bars represent people without CVD, while light orange bars represent those with CVD.
+
+The distribution of both groups follows a pattern similar to a Gaussian bell curve, with a noticeable peak in the 56–58 age range. This visualization provides key insights: overall, we can observe that younger individuals are less likely to have CVD, whereas the prevalence of CVD increases with age, reaching almost 80% in the 65–66 age group.
+
+**Cardiac disease with the intake of alcohol, smoking and physical activity.**
+
+```{r}
+bad_habits <- Tidied_cardiac_data |> 
+  select(alcohol_intake, smoke, physical_act, Cardiovascular_disease) |> 
+  group_by(alcohol_intake, smoke, physical_act, Cardiovascular_disease) |>
+  rename(alcohol = alcohol_intake,
+         smoking = smoke, 
+         Exercising = physical_act) |> 
+  pivot_longer(c("alcohol", "smoking", "Exercising"), names_to = "Habit", values_to = "Y_o_N")
+
+
+
+ggplot(data = bad_habits,
+       mapping = aes(x = Cardiovascular_disease, 
+                     fill = Y_o_N)) +
+  geom_bar() +
+  facet_wrap(~Habit) +
+  scale_size(range = c(2, 12)) +
+  scale_y_continuous(breaks = seq(0, 40000, 10000), limits = c(0, 40000)) +
+  scale_fill_brewer(type = "qual", palette = 5) +
+  labs(title = "Cardiovascular disease regarding unhealthy lifestyle habits",
+       subtitle = "presence of Cardiovascular across Alcohol, smoking and physical activity",
+       x = "Presence of Cardiovascular diseases",
+       y = "Number of people",
+       fill = "Prevalence of
+Unhealthy Lifestyle
+Habits",
+       caption = "Data: Tidied Cardiac dataset."
+  ) +
+  theme_minimal(base_size = 11) 
+
+```
+
+Figure 3 is a grouped bar chart displaying the frequency of individuals engaging in unhealthy habits such as alcohol consumption, lack of physical activity, and smoking. The x-axis represents the presence or absence of cardiovascular disease (CVD), while the bar colors indicate whether or not the individual engages in the activity: light green for *No* and light orange for *Yes*.
+
+Regarding alcohol consumption, the data shows that very few individuals engage in this habit, regardless of whether they have CVD or not. In terms of physical activity, both groups, those with and without CVD, show a high prevalence of regular exercise. Finally, in the case of smoking, only a small portion of individuals in either group report smoking, though this number is slightly higher than that for alcohol consumption.
 
 # Results
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jose Daniel Trujillo Sandoval">
-<meta name="dcterms.date" content="2025-07-13">
+<meta name="dcterms.date" content="2025-07-14">
 
 <title>Data exploration for Heart diseases and common habits</title>
 <style>
@@ -127,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 13, 2025</p>
+      <p class="date">July 14, 2025</p>
     </div>
   </div>
   
@@ -792,11 +792,10 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Tidied_cardiac_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/tidied_Cardiac_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this part, we show the visualization of the data set in terms of relevant information. Regarding the information of this tidied data set, we would look for information that says if there is any relation between High pressure (over 130/80 mmHg) and the presence of Cholesterol and CardioVascular disease.</p>
-<p>Which set of group its more likely to have cardiovascular disease at a certain age.</p>
-<p>Relation between BMI and level of glucose.</p>
-<p>a Cardiac disease with the intake of alcohol, smoking and physical activity.</p>
-<p>High Pressure vs Cholesterol and Cardiovascular disease.</p>
+<p>In this section, we present visualizations of the dataset focused on extracting relevant insights. Specifically, we aim to explore whether there is a relationship between high blood pressure (defined as values above 130/80 mmHg), cholesterol levels, and the presence of cardiovascular disease (CVD).</p>
+<p>Additionally, we seek to answer the question of which age groups have more cardiovascular disease, based on the available data.</p>
+<p>Finally, we examine the prevalence of cardiovascular disease in relation to lifestyle factors, such as alcohol consumption, smoking, and physical activity.</p>
+<p><strong>Hypertension vs Cholesterol levels and Cardiovascular diseases.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>High_Pressure_Cholesterol_CV_disease<span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(systolic, diastolic, cholesterol, Cardiovascular_disease) <span class="sc">|&gt;</span> </span>
@@ -827,7 +826,11 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 </div>
 </div>
 </div>
-<p>Age and Cardiovascular disease.</p>
+<p>Figure 1 presents a visualization comparing groups of individuals with extremely high, high, and normal cholesterol levels, distinguishing between those with and without cardiovascular disease (CVD). The dataset has been filtered to include only individuals with hypertension, defined as having an average systolic blood pressure above 130 mmHg and diastolic blood pressure above 80 mmHg.</p>
+<p>The figure uses a boxplot to display the distribution of mean blood pressure across the different cholesterol level groups, highlighting the average values, identifying outliers, and illustrating the prevalence of CVD within each group.</p>
+<p>From the chart, we observe that individuals with high and normal cholesterol levels tend to have higher blood pressure if they also have cardiovascular disease, compared to those without CVD. Notably, these groups also show a higher average blood pressure, around 115 mmHg, among individuals with CVD, while those without CVD have a lower mean of approximately 110 mmHg.</p>
+<p>In contrast, for the group with extremely high cholesterol levels, there is no significant difference in mean blood pressure between individuals with and without CVD; both subgroups show an average close to 115 mmHg.</p>
+<p><strong>Age distribution and Cardiovascular disease.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cv_disease_age <span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, Cardiovascular_disease) </span>
@@ -855,6 +858,48 @@ $ bmi               &lt;dbl&gt; 22.0, 34.9, 23.5, 28.7, 23.0, 29.4, 37.7, 30.0, 
 </div>
 </div>
 </div>
+<p>Figure 2 presents a histogram illustrating the age distribution of the population, grouped in two-year intervals, starting from 38 years old and ending at 66 years old. The chart also differentiates between individuals with and without cardiovascular disease (CVD): light green bars represent people without CVD, while light orange bars represent those with CVD.</p>
+<p>The distribution of both groups follows a pattern similar to a Gaussian bell curve, with a noticeable peak in the 56–58 age range. This visualization provides key insights: overall, we can observe that younger individuals are less likely to have CVD, whereas the prevalence of CVD increases with age, reaching almost 80% in the 65–66 age group.</p>
+<p><strong>Cardiac disease with the intake of alcohol, smoking and physical activity.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>bad_habits <span class="ot">&lt;-</span> Tidied_cardiac_data <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(alcohol_intake, smoke, physical_act, Cardiovascular_disease) <span class="sc">|&gt;</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(alcohol_intake, smoke, physical_act, Cardiovascular_disease) <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">alcohol =</span> alcohol_intake,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">smoking =</span> smoke, </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Exercising =</span> physical_act) <span class="sc">|&gt;</span> </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">"alcohol"</span>, <span class="st">"smoking"</span>, <span class="st">"Exercising"</span>), <span class="at">names_to =</span> <span class="st">"Habit"</span>, <span class="at">values_to =</span> <span class="st">"Y_o_N"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bad_habits,</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Cardiovascular_disease, </span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> Y_o_N)) <span class="sc">+</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Habit) <span class="sc">+</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">40000</span>, <span class="dv">10000</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40000</span>)) <span class="sc">+</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">type =</span> <span class="st">"qual"</span>, <span class="at">palette =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cardiovascular disease regarding unhealthy lifestyle habits"</span>,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"presence of Cardiovascular across Alcohol, smoking and physical activity"</span>,</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Presence of Cardiovascular diseases"</span>,</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of people"</span>,</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Prevalence of</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="st">Unhealthy Lifestyle</span></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="st">Habits"</span>,</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: Tidied Cardiac dataset."</span></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure 3 is a grouped bar chart displaying the frequency of individuals engaging in unhealthy habits such as alcohol consumption, lack of physical activity, and smoking. The x-axis represents the presence or absence of cardiovascular disease (CVD), while the bar colors indicate whether or not the individual engages in the activity: light green for <em>No</em> and light orange for <em>Yes</em>.</p>
+<p>Regarding alcohol consumption, the data shows that very few individuals engage in this habit, regardless of whether they have CVD or not. In terms of physical activity, both groups, those with and without CVD, show a high prevalence of regular exercise. Finally, in the case of smoking, only a small portion of individuals in either group report smoking, though this number is slightly higher than that for alcohol consumption.</p>
 </section>
 </section>
 <section id="results" class="level1">
